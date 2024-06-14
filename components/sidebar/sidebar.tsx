@@ -9,16 +9,14 @@ import { AccountsIcon } from "../icons/sidebar/accounts-icon";
 import { CustomersIcon } from "../icons/sidebar/customers-icon";
 import { ProductsIcon } from "../icons/sidebar/products-icon";
 import { ReportsIcon } from "../icons/sidebar/reports-icon";
-import { DevIcon } from "../icons/sidebar/dev-icon";
-import { ViewIcon } from "../icons/sidebar/view-icon";
 import { SettingsIcon } from "../icons/sidebar/settings-icon";
 import { CollapseItems } from "./collapse-items";
 import { SidebarItem } from "./sidebar-item";
 import { SidebarMenu } from "./sidebar-menu";
 import { FilterIcon } from "../icons/sidebar/filter-icon";
 import { useSidebarContext } from "../layout/layout-context";
-import { ChangeLogIcon } from "../icons/sidebar/changelog-icon";
 import { usePathname } from "next/navigation";
+import { AiFillProduct } from "react-icons/ai";
 
 export const SidebarWrapper = () => {
   const pathname = usePathname();
@@ -43,24 +41,19 @@ export const SidebarWrapper = () => {
               title="Home"
               icon={<HomeIcon />}
               isActive={pathname === "/"}
-              href="/"
+              href="/dashboard"
             />
-            <SidebarMenu title="Main Menu">
+            <SidebarMenu title="Menu">
               <SidebarItem
-                isActive={pathname === "/accounts"}
-                title="Accounts"
-                icon={<AccountsIcon />}
-                href="accounts"
+                isActive={pathname === "/dashboard/products"}
+                title="Products"
+                icon={<AiFillProduct className="text-2xl text-indigo-600" />}
+                href="/dashboard/products"
               />
               <SidebarItem
-                isActive={pathname === "/payments"}
-                title="Payments"
+                isActive={pathname === "/Orders"}
+                title="Orders"
                 icon={<PaymentsIcon />}
-              />
-              <CollapseItems
-                icon={<BalanceIcon />}
-                items={["Banks Accounts", "Credit Cards", "Loans"]}
-                title="Balances"
               />
               <SidebarItem
                 isActive={pathname === "/customers"}
@@ -68,42 +61,11 @@ export const SidebarWrapper = () => {
                 icon={<CustomersIcon />}
               />
               <SidebarItem
-                isActive={pathname === "/products"}
-                title="Products"
-                icon={<ProductsIcon />}
-              />
-              <SidebarItem
                 isActive={pathname === "/reports"}
                 title="Reports"
                 icon={<ReportsIcon />}
               />
             </SidebarMenu>
-
-            {/* <SidebarMenu title="General">
-              <SidebarItem
-                isActive={pathname === "/developers"}
-                title="Developers"
-                icon={<DevIcon />}
-              />
-              <SidebarItem
-                isActive={pathname === "/view"}
-                title="View Test Data"
-                icon={<ViewIcon />}
-              />
-              <SidebarItem
-                isActive={pathname === "/settings"}
-                title="Settings"
-                icon={<SettingsIcon />}
-              />
-            </SidebarMenu> */}
-
-            {/* <SidebarMenu title="Updates">
-              <SidebarItem
-                isActive={pathname === "/changelog"}
-                title="Changelog"
-                icon={<ChangeLogIcon />}
-              />
-            </SidebarMenu> */}
           </div>
           <div className={Sidebar.Footer()}>
             <Tooltip content={"Settings"} color="primary">

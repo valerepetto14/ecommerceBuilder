@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { AcmeIcon } from "../icons/acme-icon";
 import { AcmeLogo } from "../icons/acmelogo";
 import { BottomIcon } from "../icons/sidebar/bottom-icon";
+import { IoMdAdd } from "react-icons/io";
 
 interface Company {
   name: string;
@@ -17,12 +18,21 @@ interface Company {
   logo: React.ReactNode;
 }
 
-export const CompaniesDropdown = () => {
-  const [company, setCompany] = useState<Company>({
-    name: "Acme Co.",
-    location: "Palo Alto, CA",
+const companies = [
+  {
+    name: "Ecommerce 1",
+    location: "Querétaro, México",
     logo: <AcmeIcon />,
-  });
+  },
+  {
+    name: "Ecommerce 2",
+    location: "Montevideo, Uruguay",
+    logo: <AcmeLogo />,
+  },
+];
+
+export const CompaniesDropdown = () => {
+  const [company, setCompany] = useState<Company>(companies[0]);
   return (
     <Dropdown
       classNames={{
@@ -45,81 +55,47 @@ export const CompaniesDropdown = () => {
       </DropdownTrigger>
       <DropdownMenu
         onAction={(e) => {
+          if (e === "0") {
+            setCompany({
+              name: "Ecommerce 1",
+              location: "Querétaro, México",
+              logo: <AcmeIcon />,
+            });
+          }
           if (e === "1") {
             setCompany({
-              name: "Facebook",
-              location: "San Fransico, CA",
-              logo: <AcmeIcon />,
-            });
-          }
-          if (e === "2") {
-            setCompany({
-              name: "Instagram",
-              location: "Austin, Tx",
+              name: "Ecommerce 2",
+              location: "Montevideo, Uruguay",
               logo: <AcmeLogo />,
-            });
-          }
-          if (e === "3") {
-            setCompany({
-              name: "Twitter",
-              location: "Brooklyn, NY",
-              logo: <AcmeIcon />,
-            });
-          }
-          if (e === "4") {
-            setCompany({
-              name: "Acme Co.",
-              location: "Palo Alto, CA",
-              logo: <AcmeIcon />,
             });
           }
         }}
         aria-label="Avatar Actions"
       >
         <DropdownSection title="Companies">
+          {companies.map((company, index) => (
+            <DropdownItem
+              key={index}
+              startContent={company.logo}
+              description={company.location}
+              classNames={{
+                base: "py-4",
+                title: "text-base font-semibold",
+              }}
+            >
+              {company.name}
+            </DropdownItem>
+          ))}
           <DropdownItem
-            key="1"
-            startContent={<AcmeIcon />}
-            description="San Fransico, CA"
+            key={0}
+            description="Start a new ecommerce"
+            startContent={<IoMdAdd className="text-2xl rounded-md" />}
             classNames={{
-              base: "py-4",
+              base: "p-3 mt-5 font-semibold text-default-900",
               title: "text-base font-semibold",
             }}
           >
-            Facebook
-          </DropdownItem>
-          <DropdownItem
-            key="2"
-            startContent={<AcmeLogo />}
-            description="Austin, Tx"
-            classNames={{
-              base: "py-4",
-              title: "text-base font-semibold",
-            }}
-          >
-            Instagram
-          </DropdownItem>
-          <DropdownItem
-            key="3"
-            startContent={<AcmeIcon />}
-            description="Brooklyn, NY"
-            classNames={{
-              base: "py-4",
-              title: "text-base font-semibold",
-            }}
-          >
-            Twitter
-          </DropdownItem>
-          <DropdownItem
-            key="4"
-            startContent={<AcmeIcon />}
-            description="Palo Alto, CA"
-            classNames={{
-              base: "py-4",
-              title: "text-base font-semibold",
-            }}
-          >
-            Acme Co.
+            Add ecommerce
           </DropdownItem>
         </DropdownSection>
       </DropdownMenu>
