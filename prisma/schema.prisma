@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int            @id @unique @default(autoincrement())
+  email         String         @unique
+  firstName     String         @map("first_name")
+  lastName      String         @map("last_name")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  UsersOnStores UsersOnStore[]
+
+  @@map("users")
+}
+
+model Store {
+  id            Int            @id @unique @default(autoincrement())
+  name          String
+  description   String?
+  logo          String?
+  phoneNumber   String         @map("phone_number")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  UsersOnStores UsersOnStore[]
+  Category      Category[]
+  Subcategory   Subcategory[]
+  Product       Product[]
+
+  @@map("stores")
+}
+
+model UsersOnStore {
+  userId  Int
+  store   Store @relation(fields: [storeId], references: [id])
+  storeId Int
+  user    User  @relation(fields: [userId], references: [id])
+  role    Role
+
+  @@id([userId, storeId])
+  @@map("stores_users")
+}
+
+model Category {
+  id          Int           @id @unique @default(autoincrement())
+  name        String
+  store       Store         @relation(fields: [storeId], references: [id])
+  storeId     Int
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
+  Subcategory Subcategory[]
+  Product     Product[]
+
+  @@map("categories")
+}
+
+model Subcategory {
+  id         Int       @id @unique @default(autoincrement())
+  name       String
+  category   Category  @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  store      Store     @relation(fields: [storeId], references: [id])
+  storeId    Int
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  Product    Product[]
+
+  @@map("subcategories")
+}
+
+model Product {
+  id            Int         @id @unique @default(autoincrement())
+  name          String
+  description   String?
+  store         Store       @relation(fields: [storeId], references: [id])
+  storeId       Int
+  category      Category    @relation(fields: [categoryId], references: [id])
+  categoryId    Int
+  subcategory   Subcategory @relation(fields: [subcategoryId], references: [id])
+  subcategoryId Int
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+
+  @@map("products")
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  MEMBER
+}
