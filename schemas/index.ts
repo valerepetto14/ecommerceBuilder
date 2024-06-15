@@ -1,7 +1,9 @@
 import * as z from "zod";
 
 interface SignUpData {
-  name: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
   email: string;
   password: string;
   confirmPassword?: string;
@@ -23,7 +25,7 @@ const passwordRegex = /^(?=.*[A-Z])(?=.*\d).+$/;
 
 export const SignUpSchema = z
   .object({
-    name: z
+    firstName: z
       .string()
       .min(3, {
         message: "Name must be at least 3 characters long",
@@ -31,6 +33,17 @@ export const SignUpSchema = z
       .refine((value: string) => !/\d/.test(value), {
         message: "Name must not contain numbers",
       }),
+    lastName: z
+      .string()
+      .min(3, {
+        message: "Name must be at least 3 characters long",
+      })
+      .refine((value: string) => !/\d/.test(value), {
+        message: "Name must not contain numbers",
+      }),
+    phoneNumber: z.string().min(10, {
+      message: "Phone number must be at least 10 characters long",
+    }),
     email: z.string().email({
       message: "Please enter a valid email",
     }),

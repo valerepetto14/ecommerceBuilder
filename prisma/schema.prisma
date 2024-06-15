@@ -14,13 +14,15 @@ datasource db {
 }
 
 model User {
-  id            Int            @id @unique @default(autoincrement())
+  id            String         @id @unique @default(uuid())
   email         String         @unique
   firstName     String         @map("first_name")
   lastName      String         @map("last_name")
   password      String    
   phoneNumber   String         @map("phone_number")
   createdAt     DateTime       @default(now()) @map("created_at")
+  status        Boolean        @default(true)
+  profileImage  String?        @map("profile_image")
   updatedAt     DateTime       @updatedAt @map("updated_at")
   UsersOnStores UsersOnStore[]
 
@@ -28,7 +30,7 @@ model User {
 }
 
 model Store {
-  id            Int            @id @unique @default(autoincrement())
+  id            String            @id @unique @default(uuid())
   name          String
   description   String?
   logo          String?
@@ -44,9 +46,9 @@ model Store {
 }
 
 model UsersOnStore {
-  userId  Int
+  userId  String
   store   Store @relation(fields: [storeId], references: [id])
-  storeId Int
+  storeId String
   user    User  @relation(fields: [userId], references: [id])
   role    Role
 
@@ -55,10 +57,10 @@ model UsersOnStore {
 }
 
 model Category {
-  id          Int           @id @unique @default(autoincrement())
+  id          String       @id @unique @default(uuid())
   name        String
   store       Store         @relation(fields: [storeId], references: [id])
-  storeId     Int
+  storeId     String
   createdAt   DateTime      @default(now()) @map("created_at")
   updatedAt   DateTime      @updatedAt @map("updated_at")
   Subcategory Subcategory[]
@@ -68,12 +70,12 @@ model Category {
 }
 
 model Subcategory {
-  id         Int       @id @unique @default(autoincrement())
+  id         String       @id @unique @default(uuid())
   name       String
   category   Category  @relation(fields: [categoryId], references: [id])
-  categoryId Int
+  categoryId String
   store      Store     @relation(fields: [storeId], references: [id])
-  storeId    Int
+  storeId    String
   createdAt  DateTime  @default(now()) @map("created_at")
   updatedAt  DateTime  @updatedAt @map("updated_at")
   Product    Product[]
@@ -82,15 +84,17 @@ model Subcategory {
 }
 
 model Product {
-  id            Int         @id @unique @default(autoincrement())
+  id            String       @id @unique @default(uuid())
   name          String
   description   String?
   store         Store       @relation(fields: [storeId], references: [id])
-  storeId       Int
+  storeId       String
   category      Category    @relation(fields: [categoryId], references: [id])
-  categoryId    Int
+  categoryId    String
   subcategory   Subcategory @relation(fields: [subcategoryId], references: [id])
-  subcategoryId Int
+  subcategoryId String
+  price         Float
+  image         String
   createdAt     DateTime    @default(now()) @map("created_at")
   updatedAt     DateTime    @updatedAt @map("updated_at")
 

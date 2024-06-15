@@ -3,13 +3,13 @@ import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignUpSchema } from "@/schemas/index";
 import * as z from "zod";
 import FormError from "../formMessage/formError";
 import FormSuccess from "../formMessage/formSuccess";
-// import { signUp } from "@/actions/auth";
+import { signUp } from "@/actions/auth";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -25,8 +25,10 @@ const SignUpForm = () => {
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
-      name: "",
+      firstName: "",
+      lastName: "",
       email: "",
+      phoneNumber: "",
       password: "",
       confirmPassword: "",
     },
@@ -36,14 +38,19 @@ const SignUpForm = () => {
     setError(null);
     setIsPending(true);
     setSuccess(null);
-    // signUp(data)
-    //   .then((res) => {
-    //     setError(res.error as string);
-    //     setSuccess(res.success as string);
-    //   })
-    //   .finally(() => {
-    //     setIsPending(false);
-    //   });
+    signUp(data)
+      .then((res) => {
+        if (res?.error) {
+          setError(res.error);
+        }
+        if (res?.success) {
+          setSuccess(res.success);
+          router.push("/auth/signin");
+        }
+      })
+      .finally(() => {
+        setIsPending(false);
+      });
   };
 
   const toggleVisibility = () => {
@@ -59,13 +66,23 @@ const SignUpForm = () => {
       >
         <Input
           type="text"
-          label="Name"
-          placeholder="Name"
+          label="First Name"
+          placeholder="First Name"
           isDisabled={isPending}
           variant="bordered"
-          isInvalid={form.formState.errors.name ? true : false}
-          errorMessage={form.formState.errors.name?.message}
-          {...form.register("name")}
+          isInvalid={form.formState.errors.firstName ? true : false}
+          errorMessage={form.formState.errors.firstName?.message}
+          {...form.register("firstName")}
+        />
+        <Input
+          type="text"
+          label="Last Name"
+          placeholder="Last Name"
+          isDisabled={isPending}
+          variant="bordered"
+          isInvalid={form.formState.errors.lastName ? true : false}
+          errorMessage={form.formState.errors.lastName?.message}
+          {...form.register("lastName")}
         />
         <Input
           type="email"
@@ -77,11 +94,21 @@ const SignUpForm = () => {
           errorMessage={form.formState.errors.email?.message}
           {...form.register("email")}
         />
-        <PhoneInputCustom
-          label="Phone Number"
-          placeholder="Phone Number"
-          isDisabled={isPending}
-          variant="bordered"
+        <Controller
+          control={form.control}
+          name="phoneNumber"
+          rules={{ required: true }}
+          render={({ field: { ref, ...field } }) => (
+            <PhoneInputCustom
+              {...field}
+              inputExtraProps={{
+                ref,
+                required: true,
+                autoFocus: true,
+              }}
+              errorMessage={form.formState.errors.phoneNumber?.message}
+            />
+          )}
         />
         <Input
           type={isPasswordVisible ? "text" : "password"}
@@ -107,7 +134,6 @@ const SignUpForm = () => {
           }
         />
         <Input
-          type={isPasswordVisible ? "text" : "password"}
           label="Confirm Password"
           placeholder="Confirm Password"
           isDisabled={isPending}

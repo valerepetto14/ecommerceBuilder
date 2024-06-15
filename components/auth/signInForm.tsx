@@ -41,6 +41,7 @@ const SignInForm = () => {
       redirect: false,
     })
       .then((res) => {
+        console.log("res", res);
         if (res?.error) {
           if (res.status === 401) {
             setError("Credentials are invalid");
