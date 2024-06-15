@@ -9,7 +9,10 @@ const Page = async () => {
       <h2 className="font-semibold text-xl">Users</h2>
       <ul>
         {users.map((user) => (
-          <li>
+          <li
+            key={user.id}
+            className="border-b border-gray-200 py-4 flex items-center justify-between"
+          >
             <p>
               {`Email: ${user.email}, Name: ${user.firstName}, Created: ${user.createdAt}`}
             </p>
