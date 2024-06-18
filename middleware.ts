@@ -1,3 +1,24 @@
-export { default } from "next-auth/middleware";
+import { getToken } from "next-auth/jwt";
+import { withAuth } from "next-auth/middleware";
+import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
-export const config = { matcher: ["/dashboard", "/dashboard/products"] };
+export default async function middleware(
+  req: NextRequest,
+  event: NextFetchEvent
+) {
+  const token = await getToken({ req });
+  const isAuthenticated = !!token;
+
+  if (req.nextUrl.pathname.startsWith("/signin") && isAuthenticated) {
+    return NextResponse.redirect(new URL("/selectStore", req.url));
+  }
+
+  const authMiddleware = await withAuth({
+    pages: {
+      signIn: `/signin`,
+    },
+  });
+
+  // @ts-expect-error
+  return authMiddleware(req, event);
+}

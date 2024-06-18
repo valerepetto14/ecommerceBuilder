@@ -7,7 +7,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="relative">
         <div className="flex justify-center items-center h-screen">
-          <div className="w-2/3 h-screen flex flex-col justify-center bg-indigo-600">
+          <div className="w-2/3 h-screen flex flex-col justify-center bg-gradient-to-r from-violet-600 to-indigo-600">
             <h1 className="font-bold text-[1.5rem] text-white absolute top-10 left-10">
               EcommerceBuilder
             </h1>

@@ -51,7 +51,7 @@ const SignInForm = () => {
           }
         } else {
           setSuccess("Signed in");
-          router.push("/dashboard");
+          router.push("/selectStore");
         }
       })
       .finally(() => {

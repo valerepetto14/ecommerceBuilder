@@ -96,7 +96,7 @@ const handler = NextAuth({
     },
   },
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/signin",
     error: "/auth/error",
   },
 });
