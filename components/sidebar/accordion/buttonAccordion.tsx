@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
-import { SidebarItem } from "./sidebar-item";
+import { SidebarItem } from "../sidebar-item";
 
-interface ButtonAccordeonProps {
+interface ButtonAccordionProps {
   title: string;
   onClick: () => void;
   isActive: boolean;
@@ -9,13 +9,13 @@ interface ButtonAccordeonProps {
   icon: ReactElement;
 }
 
-const ButtonAccordeon = ({
+const ButtonAccordion = ({
   onClick,
   title,
   children,
   isActive,
   icon,
-}: ButtonAccordeonProps) => {
+}: ButtonAccordionProps) => {
   return (
     <div className="flex flex-col">
       <SidebarItem
@@ -29,4 +29,4 @@ const ButtonAccordeon = ({
   );
 };
 
-export default ButtonAccordeon;
+export default ButtonAccordion;

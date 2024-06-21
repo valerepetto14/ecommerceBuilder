@@ -5,21 +5,17 @@ import { Avatar, Tooltip } from "@nextui-org/react";
 import { CompaniesDropdown } from "./companies-dropdown";
 import { HomeIcon } from "../icons/sidebar/home-icon";
 import { PaymentsIcon } from "../icons/sidebar/payments-icon";
-import { BalanceIcon } from "../icons/sidebar/balance-icon";
-import { AccountsIcon } from "../icons/sidebar/accounts-icon";
 import { CustomersIcon } from "../icons/sidebar/customers-icon";
 import { ProductsIcon } from "../icons/sidebar/products-icon";
-import { ReportsIcon } from "../icons/sidebar/reports-icon";
 import { SettingsIcon } from "../icons/sidebar/settings-icon";
-import { CollapseItems } from "./collapse-items";
 import { SidebarItem } from "./sidebar-item";
 import { SidebarMenu } from "./sidebar-menu";
-import { FilterIcon } from "../icons/sidebar/filter-icon";
 import { useSidebarContext } from "../layout/layout-context";
 import { usePathname } from "next/navigation";
 import { AiFillProduct } from "react-icons/ai";
 import { useState } from "react";
-import ButtonAccordeon from "./buttonAccordeon";
+import ButtonAccordeon from "./accordion/buttonAccordion";
+import ItemAccordion from "./accordion/itemAccordion";
 
 export const SidebarWrapper = () => {
   const pathname = usePathname();
@@ -114,43 +110,22 @@ export const SidebarWrapper = () => {
 };
 
 const SettingAccordion = ({ open }: { open: boolean }): ReactElement => {
+  const pathname = usePathname();
+
   return (
     <ul
       className={`ml-3 bg-white w-3/3 flex flex-col   ${!open ? "hidden" : ""}`}
     >
       <ItemAccordion
+        isActive={pathname.includes("integrations")}
         href="/dashboard/settings/integrations"
         title="Integraciones"
       />
       <ItemAccordion
+        isActive={pathname.includes("notifications")}
         href="/dashboard/settings/notifications"
         title="Notifications"
       />
     </ul>
-  );
-};
-
-interface ItemAccordion {
-  href: string;
-  title: string;
-}
-
-const ItemAccordion = ({ href, title }: ItemAccordion) => {
-  const pathname = usePathname();
-
-  const isActive = pathname === href;
-
-  return (
-    <li
-      className={`${
-        isActive
-          ? "border-l-4 border-indigo-600"
-          : "border-indigo-300 border-l-2"
-      } p-2`}
-    >
-      <a className="ml-2 text-sm" href={href}>
-        {title}
-      </a>
-    </li>
   );
 };
