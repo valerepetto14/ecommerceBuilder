@@ -45,7 +45,7 @@ const SignUpForm = () => {
         }
         if (res?.success) {
           setSuccess(res.success);
-          router.push("/auth/signin");
+          router.push("/signin");
         }
       })
       .finally(() => {
@@ -159,7 +159,7 @@ const SignUpForm = () => {
       </form>
       <div className="mt-2 flex gap-2">
         <p>Already have an account?</p>
-        <Link className="font-bold" href="/auth/signin">
+        <Link className="font-bold" href="/signin">
           Back to Sign In
         </Link>
       </div>

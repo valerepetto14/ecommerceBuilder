@@ -1,6 +1,6 @@
 const StoreLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="w-full h-screen bg-gradient-to-r from-violet-600 to-indigo-600 flex justify-center items-center">
+    <div className="w-full h-screen bg-gradient-to-b from-gray-900 to-gray-600 flex justify-center items-center">
       {children}
     </div>
   );

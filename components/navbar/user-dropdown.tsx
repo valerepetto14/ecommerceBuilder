@@ -17,7 +17,7 @@ export const UserDropdown = () => {
   };
 
   return (
-    <Dropdown className="">
+    <Dropdown className="" backdrop="blur">
       <NavbarItem>
         <DropdownTrigger>
           <Avatar

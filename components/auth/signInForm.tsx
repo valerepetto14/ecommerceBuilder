@@ -51,7 +51,7 @@ const SignInForm = () => {
           }
         } else {
           setSuccess("Signed in");
-          router.push("/selectStore");
+          router.push("/dashboard");
         }
       })
       .finally(() => {
@@ -66,7 +66,7 @@ const SignInForm = () => {
   return (
     <div className="w-3/5 px-12">
       <form
-        className="flex flex-col gap-2"
+        className="flex flex-col gap-5"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <Input
@@ -75,19 +75,31 @@ const SignInForm = () => {
           placeholder="Name"
           isDisabled={isPending}
           variant="bordered"
+          labelPlacement="outside"
           isInvalid={form.formState.errors.email ? true : false}
           errorMessage={form.formState.errors.email?.message}
+          classNames={{
+            label: "text-default-400 text-xs font-normal text-gray-600",
+            input: "text-default-900",
+            inputWrapper: "border border-default-300 rounded-xl",
+          }}
           {...form.register("email")}
         />
         <Input
           type={isPasswordVisible ? "text" : "password"}
-          label="Password"
-          placeholder="Email"
+          label="Contraseña"
+          placeholder="Contraseña"
           isDisabled={isPending}
           variant="bordered"
+          labelPlacement="outside"
           isInvalid={form.formState.errors.password ? true : false}
           errorMessage={form.formState.errors.password?.message}
           {...form.register("password")}
+          classNames={{
+            label: "text-default-400 text-xs font-normal text-gray-600",
+            input: "text-default-900",
+            inputWrapper: "border border-default-300 rounded-xl",
+          }}
           endContent={
             <button
               className="focus:outline-none"
@@ -106,7 +118,7 @@ const SignInForm = () => {
           isDisabled={isPending}
           radius="sm"
           type="submit"
-          className="bg-indigo-600 hover:bg-blue-800 text-white hover:scale-105 transition-all mt-5"
+          className="bg-green-500 hover:bg-blue-800 text-white hover:scale-105 transition-all mt-5"
         >
           {isPending ? (
             <ClipLoader color="white" loading={isPending} size={20} />
@@ -115,14 +127,6 @@ const SignInForm = () => {
           )}
         </Button>
       </form>
-      <div className="mt-2">
-        <div className="flex gap-2">
-          <p>Dont have an account?</p>
-          <Link className="font-bold" href="/auth/signup">
-            Sign Up
-          </Link>
-        </div>
-      </div>
       <div className="mt-10">
         <FormError message={error} />
         <FormSuccess message={success} />

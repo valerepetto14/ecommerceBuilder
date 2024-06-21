@@ -11,12 +11,12 @@ interface SignUpData {
 
 export const SignInSchema = z.object({
   email: z.string().email({
-    message: "Please enter a valid email",
+    message: "Por favor, ingrese un correo electrónico válido",
   }),
   password: z
     .string()
     .min(8, {
-      message: "Password must be at least 8 characters long",
+      message: "La contraseña debe tener al menos 8 caracteres",
     })
     .max(20),
 });

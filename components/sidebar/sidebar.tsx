@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { ReactElement } from "react";
 import { Sidebar } from "./sidebar.styles";
 import { Avatar, Tooltip } from "@nextui-org/react";
 import { CompaniesDropdown } from "./companies-dropdown";
@@ -17,10 +18,20 @@ import { FilterIcon } from "../icons/sidebar/filter-icon";
 import { useSidebarContext } from "../layout/layout-context";
 import { usePathname } from "next/navigation";
 import { AiFillProduct } from "react-icons/ai";
+import { useState } from "react";
+import ButtonAccordeon from "./buttonAccordeon";
 
 export const SidebarWrapper = () => {
   const pathname = usePathname();
   const { collapsed, setCollapsed } = useSidebarContext();
+  type CollapseOption = "settings" | "products" | "orders" | "customers";
+  const [sideBarItemOpen, setSideBarItemOpen] = useState<CollapseOption | "">(
+    ""
+  );
+
+  const handleCollapse = (option: CollapseOption) => {
+    setSideBarItemOpen(sideBarItemOpen === option ? "" : option);
+  };
 
   return (
     <aside className="h-screen z-[20] sticky top-0">
@@ -61,10 +72,26 @@ export const SidebarWrapper = () => {
                 icon={<CustomersIcon />}
               />
               <SidebarItem
-                isActive={pathname === "/reports"}
-                title="Reports"
-                icon={<ReportsIcon />}
+                isActive={pathname === "/customers"}
+                title="Customers"
+                icon={<CustomersIcon />}
               />
+              <ButtonAccordeon
+                title="Configuracion"
+                isActive={
+                  sideBarItemOpen === "settings" ||
+                  pathname.includes("settings")
+                }
+                onClick={() => handleCollapse("settings")}
+                icon={<ProductsIcon />}
+              >
+                <SettingAccordion
+                  open={
+                    sideBarItemOpen === "settings" ||
+                    pathname.includes("settings")
+                  }
+                />
+              </ButtonAccordeon>
             </SidebarMenu>
           </div>
           <div className={Sidebar.Footer()}>
@@ -83,5 +110,47 @@ export const SidebarWrapper = () => {
         </div>
       </div>
     </aside>
+  );
+};
+
+const SettingAccordion = ({ open }: { open: boolean }): ReactElement => {
+  return (
+    <ul
+      className={`ml-3 bg-white w-3/3 flex flex-col   ${!open ? "hidden" : ""}`}
+    >
+      <ItemAccordion
+        href="/dashboard/settings/integrations"
+        title="Integraciones"
+      />
+      <ItemAccordion
+        href="/dashboard/settings/notifications"
+        title="Notifications"
+      />
+    </ul>
+  );
+};
+
+interface ItemAccordion {
+  href: string;
+  title: string;
+}
+
+const ItemAccordion = ({ href, title }: ItemAccordion) => {
+  const pathname = usePathname();
+
+  const isActive = pathname === href;
+
+  return (
+    <li
+      className={`${
+        isActive
+          ? "border-l-4 border-indigo-600"
+          : "border-indigo-300 border-l-2"
+      } p-2`}
+    >
+      <a className="ml-2 text-sm" href={href}>
+        {title}
+      </a>
+    </li>
   );
 };

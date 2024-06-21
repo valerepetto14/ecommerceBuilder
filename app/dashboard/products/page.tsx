@@ -34,9 +34,10 @@ const Navigation = () => (
 
 const productsPage = () => {
   return (
-    <div className="my-14 lg:px-6 max-w-[95rem] mx-auto w-full flex flex-col gap-4">
+    <div className="my-10 max-w-[99rem] mx-auto w-full flex flex-col gap-4">
       <Navigation />
       <Table
+        radius="sm"
         color="default"
         defaultSelectedKeys={[2]}
         selectionMode="single"

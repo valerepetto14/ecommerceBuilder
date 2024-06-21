@@ -5,7 +5,7 @@ import ProfileDropDown from "@/components/store/Profile-Dropdown";
 
 const SelectStorePage = () => {
   return (
-    <section className="w-1/4 h-[700px] bg-white rounded-xl shadow-xl p-10">
+    <section className="w-1/4 h-[800px] bg-white rounded-md shadow-xl p-10">
       <div className="h-20 w-full flex justify-between">
         <h1 className="text-2xl font-bold text-center text-indigo-600">
           EcommerceBuilder
@@ -17,7 +17,7 @@ const SelectStorePage = () => {
         <Link href="/createStore">
           <Button
             className="bg-indigo-600 hover:bg-blue-800 text-white hover:scale-105 transition-all shadow-xl"
-            radius="sm"
+            radius="none"
           >
             Crear tienda
           </Button>
