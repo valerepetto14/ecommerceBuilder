@@ -15,7 +15,12 @@ const ItemAccordion = ({ href, title, isActive }: ItemAccordion) => {
           : "border-indigo-300 border-l-2"
       } p-2`}
     >
-      <a className="ml-2 text-sm" href={href}>
+      <a
+        className={`ml-2 text-sm ${
+          isActive ? "font-semibold text-indigo-600" : ""
+        }`}
+        href={href}
+      >
         {title}
       </a>
     </li>
