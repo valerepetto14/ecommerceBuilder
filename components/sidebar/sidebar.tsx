@@ -79,7 +79,7 @@ export const SidebarWrapper = () => {
                   pathname.includes("settings")
                 }
                 onClick={() => handleCollapse("settings")}
-                icon={<ProductsIcon />}
+                icon={<SettingsIcon />}
               >
                 <SettingAccordion
                   open={

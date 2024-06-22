@@ -39,12 +39,12 @@ const IntegrationsPage = ({ children }: Props) => {
       <div className="flex items-center gap-4">
         <h1 className="text-2xl font-semibold">Integraciones</h1>
         <p className="text-default-500">
-          Conecta tu tienda con tu cuenta para empezar a vender tus productos.
+          Conecta con los servicios que ya usas para mejorar tu experiencia.
         </p>
       </div>
       <div className="w-full">
         <div className="w-full flex mt-10 gap-10">
-          <div className="flex flex-col gap-4 py-2 flex-2">
+          <div className="flex flex-col gap-4 flex-2">
             <ServiceItem
               isActiveService={true}
               href="/dashboard/settings/integrations/shopify"
@@ -128,7 +128,7 @@ const IntegrationsPage = ({ children }: Props) => {
               }
             />
           </div>
-          <div className="flex flex-1 px-20">{children}</div>
+          <div className="flex flex-1 px-6">{children}</div>
         </div>
       </div>
     </div>
