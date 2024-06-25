@@ -70,8 +70,14 @@ const SignUpForm = () => {
           placeholder="First Name"
           isDisabled={isPending}
           variant="bordered"
+          labelPlacement="outside"
           isInvalid={form.formState.errors.firstName ? true : false}
           errorMessage={form.formState.errors.firstName?.message}
+          classNames={{
+            label: "text-default-400 text-xs font-normal text-gray-600",
+            input: "text-default-900",
+            inputWrapper: "border border-default-300 rounded-md",
+          }}
           {...form.register("firstName")}
         />
         <Input
@@ -80,18 +86,30 @@ const SignUpForm = () => {
           placeholder="Last Name"
           isDisabled={isPending}
           variant="bordered"
+          labelPlacement="outside"
           isInvalid={form.formState.errors.lastName ? true : false}
           errorMessage={form.formState.errors.lastName?.message}
+          classNames={{
+            label: "text-default-400 text-xs font-normal text-gray-600",
+            input: "text-default-900",
+            inputWrapper: "border border-default-300 rounded-md",
+          }}
           {...form.register("lastName")}
         />
         <Input
-          type="email"
+          type="text"
           label="Email"
-          placeholder="Email"
+          placeholder="Name"
           isDisabled={isPending}
           variant="bordered"
+          labelPlacement="outside"
           isInvalid={form.formState.errors.email ? true : false}
           errorMessage={form.formState.errors.email?.message}
+          classNames={{
+            label: "text-default-400 text-xs font-normal text-gray-600",
+            input: "text-default-900",
+            inputWrapper: "border border-default-300 rounded-md",
+          }}
           {...form.register("email")}
         />
         <Controller
@@ -116,8 +134,14 @@ const SignUpForm = () => {
           placeholder="Email"
           isDisabled={isPending}
           variant="bordered"
+          labelPlacement="outside"
           isInvalid={form.formState.errors.password ? true : false}
           errorMessage={form.formState.errors.password?.message}
+          classNames={{
+            label: "text-default-400 text-xs font-normal text-gray-600",
+            input: "text-default-900",
+            inputWrapper: "border border-default-300 rounded-md",
+          }}
           {...form.register("password")}
           endContent={
             <button
@@ -135,11 +159,18 @@ const SignUpForm = () => {
         />
         <Input
           label="Confirm Password"
+          type="password"
           placeholder="Confirm Password"
           isDisabled={isPending}
           variant="bordered"
+          labelPlacement="outside"
           isInvalid={form.formState.errors.confirmPassword ? true : false}
           errorMessage={form.formState.errors.confirmPassword?.message}
+          classNames={{
+            label: "text-default-400 text-xs font-normal text-gray-600",
+            input: "text-default-900",
+            inputWrapper: "border border-default-300 rounded-md",
+          }}
           {...form.register("confirmPassword")}
         />
         <Button

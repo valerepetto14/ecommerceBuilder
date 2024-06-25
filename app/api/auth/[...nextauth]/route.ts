@@ -11,6 +11,7 @@ declare module "next-auth" {
       name: string;
       status: string;
       phone: string;
+      lastLogin: Date;
     };
   }
 }
@@ -48,16 +49,24 @@ const handler = NextAuth({
           credentials.password,
           user.password
         );
-        console.log("isValid:", isValid);
-
         // Si la contraseña es válida, devolver el usuario
         if (isValid) {
+          await prisma.user.update({
+            where: {
+              id: user.id,
+            },
+            data: {
+              lastLogin: new Date(),
+            },
+          });
+
           return {
             id: user.id,
             email: user.email,
             name: `${user.firstName} ${user.lastName}`,
             status: user.status,
             phone: user.phoneNumber,
+            lastLogin: user.lastLogin,
           };
         } else {
           console.log("Password is invalid");
@@ -70,34 +79,22 @@ const handler = NextAuth({
     strategy: "jwt",
   },
   callbacks: {
-    signIn: async ({ user }) => {
-      // Puedes agregar lógica adicional si es necesario
-      return true;
-    },
-    jwt: async (token, user) => {
+    jwt: async ({ token, user }) => {
       if (user) {
-        token.id = user.id;
-        token.email = user.email;
-        token.name = user.name;
-        token.status = user.status;
-        token.phone = user.phone;
+        token = { ...token, ...user };
       }
       return token;
     },
-    session: async (session, token) => {
-      session.user = {
-        id: token.id,
-        email: token.email,
-        name: token.name,
-        status: token.status,
-        phone: token.phone,
-      };
+    session: async ({ session, token }) => {
+      console.log("token", token);
+      session.user = token;
+      console.log("session", session);
       return session;
     },
   },
   pages: {
     signIn: "/signin",
-    error: "/auth/error",
+    signOut: "/signin",
   },
 });
 

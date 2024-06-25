@@ -17,8 +17,8 @@ const Input = (props: any) => {
           opacity: props.isDisabled ? 0.2 : 1,
           borderColor: props.error ? "red" : "grey",
           width: "100%",
-          height: "53px",
-          borderRadius: "10px",
+          height: "42px",
+          borderRadius: "7px",
         }}
         {...props}
       />

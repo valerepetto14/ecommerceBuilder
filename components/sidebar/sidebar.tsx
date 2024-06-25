@@ -117,6 +117,11 @@ const SettingAccordion = ({ open }: { open: boolean }): ReactElement => {
       className={`ml-3 bg-white w-3/3 flex flex-col   ${!open ? "hidden" : ""}`}
     >
       <ItemAccordion
+        isActive={pathname.includes("store")}
+        href="/dashboard/settings/store"
+        title="Tienda"
+      />
+      <ItemAccordion
         isActive={pathname.includes("integrations")}
         href="/dashboard/settings/integrations"
         title="Integraciones"

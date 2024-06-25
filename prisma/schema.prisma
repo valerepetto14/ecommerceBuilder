@@ -13,6 +13,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum IntegrationPlatform {
+  SHOPIFY
+  WOOCOMMERCE
+  WHATAPP
+}
+
 model User {
   id            String         @id @unique @default(uuid())
   email         String         @unique
@@ -25,7 +31,7 @@ model User {
   profileImage  String?        @map("profile_image")
   updatedAt     DateTime       @updatedAt @map("updated_at")
   UsersOnStores UsersOnStore[]
-
+  lastLogin     DateTime?      @map("last_login")
   @@map("users")
 }
 
@@ -41,9 +47,22 @@ model Store {
   Category      Category[]
   Subcategory   Subcategory[]
   Product       Product[]
-
+  Integration   Integration[]
   @@map("stores")
 }
+
+model Integration {
+  id          String       @id @unique @default(uuid())
+  store       Store        @relation(fields: [storeId], references: [id])
+  storeId     String
+  platform    IntegrationPlatform
+  config      Json         @map("config")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+
+  @@map("integrations")
+}
+
 
 model UsersOnStore {
   userId  String

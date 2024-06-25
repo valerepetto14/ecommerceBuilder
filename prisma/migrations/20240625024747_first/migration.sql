@@ -1,21 +1,29 @@
 -- CreateEnum
+CREATE TYPE "IntegrationPlatform" AS ENUM ('SHOPIFY', 'WOOCOMMERCE', 'WHATAPP');
+
+-- CreateEnum
 CREATE TYPE "Role" AS ENUM ('OWNER', 'ADMIN', 'MEMBER');
 
 -- CreateTable
 CREATE TABLE "users" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "first_name" TEXT NOT NULL,
     "last_name" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "phone_number" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "status" BOOLEAN NOT NULL DEFAULT true,
+    "profile_image" TEXT,
     "updated_at" TIMESTAMP(3) NOT NULL,
+    "last_login" TIMESTAMP(3),
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "stores" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
     "logo" TEXT,
@@ -27,9 +35,21 @@ CREATE TABLE "stores" (
 );
 
 -- CreateTable
+CREATE TABLE "integrations" (
+    "id" TEXT NOT NULL,
+    "storeId" TEXT NOT NULL,
+    "platform" "IntegrationPlatform" NOT NULL,
+    "config" JSONB NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "integrations_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "stores_users" (
-    "userId" INTEGER NOT NULL,
-    "storeId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
+    "storeId" TEXT NOT NULL,
     "role" "Role" NOT NULL,
 
     CONSTRAINT "stores_users_pkey" PRIMARY KEY ("userId","storeId")
@@ -37,9 +57,9 @@ CREATE TABLE "stores_users" (
 
 -- CreateTable
 CREATE TABLE "categories" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "storeId" INTEGER NOT NULL,
+    "storeId" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -48,10 +68,10 @@ CREATE TABLE "categories" (
 
 -- CreateTable
 CREATE TABLE "subcategories" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "categoryId" INTEGER NOT NULL,
-    "storeId" INTEGER NOT NULL,
+    "categoryId" TEXT NOT NULL,
+    "storeId" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -60,12 +80,14 @@ CREATE TABLE "subcategories" (
 
 -- CreateTable
 CREATE TABLE "products" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
-    "storeId" INTEGER NOT NULL,
-    "categoryId" INTEGER NOT NULL,
-    "subcategoryId" INTEGER NOT NULL,
+    "storeId" TEXT NOT NULL,
+    "categoryId" TEXT NOT NULL,
+    "subcategoryId" TEXT NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
+    "image" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -82,6 +104,9 @@ CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 CREATE UNIQUE INDEX "stores_id_key" ON "stores"("id");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "integrations_id_key" ON "integrations"("id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "categories_id_key" ON "categories"("id");
 
 -- CreateIndex
@@ -89,6 +114,9 @@ CREATE UNIQUE INDEX "subcategories_id_key" ON "subcategories"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "products_id_key" ON "products"("id");
+
+-- AddForeignKey
+ALTER TABLE "integrations" ADD CONSTRAINT "integrations_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "stores"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "stores_users" ADD CONSTRAINT "stores_users_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "stores"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
