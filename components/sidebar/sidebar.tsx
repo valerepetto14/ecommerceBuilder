@@ -40,7 +40,8 @@ export const SidebarWrapper = () => {
         })}
       >
         <div className={Sidebar.Header()}>
-          <CompaniesDropdown />
+          {/* <CompaniesDropdown /> */}
+          <img src="/logo.png" alt="logo" className="flex w-[170px]" />
         </div>
         <div className="flex flex-col justify-between h-full">
           <div className={Sidebar.Body()}>

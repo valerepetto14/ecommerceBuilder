@@ -1,5 +1,7 @@
+"use client";
 import { ReactElement } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface ServiceItemProps {
   title: string;
@@ -16,9 +18,15 @@ const ServiceItem = ({
   href,
   isActiveService,
 }: ServiceItemProps) => {
+  const pathname = usePathname();
+
   return (
     <Link href={href}>
-      <div className="relative flex gap-4 items-center shadow-md rounded-lg px-2 py-3 bg-white hover:scale-105 transition-all">
+      <div
+        className={`relative flex gap-4 items-center shadow-md rounded-lg px-2 py-3 bg-white hover:scale-105 transition-all border-l-4 ${
+          pathname === href ? "border-indigo-600" : "border-transparent"
+        }`}
+      >
         <div className="flex items-center justify-center w-12 h-12 bg-default-100 rounded-md">
           {icon}
         </div>

@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { SidebarItem } from "../sidebar-item";
+import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 
 interface ButtonAccordionProps {
   title: string;
@@ -17,7 +18,14 @@ const ButtonAccordion = ({
   icon,
 }: ButtonAccordionProps) => {
   return (
-    <div className="flex flex-col">
+    <div className="relative flex flex-col">
+      <div className="absolute top-3 right-4">
+        {isActive ? (
+          <MdKeyboardArrowUp className="text-white text-lg cursor-pointer" />
+        ) : (
+          <MdKeyboardArrowDown className="text-lg cursor-pointer" />
+        )}
+      </div>
       <SidebarItem
         title={title}
         isActive={isActive}

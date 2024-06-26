@@ -3,7 +3,6 @@ import React from "react";
 import { HouseIcon } from "@/components/icons/breadcrumb/house-icon";
 import { AiFillProduct } from "react-icons/ai";
 import ServiceItem from "@/components/integrations/serviceItem";
-
 interface Props {
   children: React.ReactNode;
 }
@@ -104,7 +103,7 @@ const IntegrationsPage = ({ children }: Props) => {
             />
             <ServiceItem
               isActiveService={false}
-              href="/dashboard/settings/integrations/woocommerce"
+              href="/dashboard/settings/integrations/whatsapp"
               title="WhatsApp"
               description="Conecta con WhatsApp para empezar a usar el bot."
               icon={
