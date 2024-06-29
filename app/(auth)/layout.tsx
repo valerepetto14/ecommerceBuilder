@@ -7,7 +7,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="relative">
         <div className="flex justify-center items-center h-screen">
-          <div className="w-2/3 h-screen flex flex-col justify-center bg-sky-900">
+          <div className="w-2/3 h-screen flex flex-col justify-center bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]">
             <h1 className="font-bold text-[1.5rem] text-white absolute top-10 left-10">
               EcommerceBuilder
             </h1>
@@ -43,3 +43,5 @@ function BoxRevealDemo() {
     </div>
   );
 }
+
+("absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]");

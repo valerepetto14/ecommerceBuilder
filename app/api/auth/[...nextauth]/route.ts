@@ -12,6 +12,7 @@ declare module "next-auth" {
       status: string;
       phone: string;
       lastLogin: Date;
+      img: string;
     };
   }
 }
@@ -87,7 +88,7 @@ const handler = NextAuth({
     },
     session: async ({ session, token }) => {
       console.log("token", token);
-      session.user = token;
+      session.user = token as any;
       console.log("session", session);
       return session;
     },

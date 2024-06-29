@@ -4,14 +4,17 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  Navbar,
   NavbarItem,
+  DropdownSection,
 } from "@nextui-org/react";
 import React from "react";
 import { DarkModeSwitch } from "./darkmodeswitch";
 import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 export const UserDropdown = () => {
+  const { data: session } = useSession();
+
   const handleSignOut = async () => {
     await signOut();
   };
@@ -20,15 +23,23 @@ export const UserDropdown = () => {
     <Dropdown className="" backdrop="blur">
       <NavbarItem>
         <DropdownTrigger>
-          <Avatar
-            as="button"
-            color="secondary"
-            size="md"
-            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-          />
+          <div className="flex items-center gap-2">
+            <p className="text-sm font-semibold">{session?.user.name}</p>
+            <Avatar
+              as="button"
+              size="md"
+              className="bg-white border-1 border-slate-500"
+              src={
+                session?.user.img !== null
+                  ? session?.user.img
+                  : "./img/notProfileImage.png"
+              }
+            />
+          </div>
         </DropdownTrigger>
       </NavbarItem>
       <DropdownMenu
+        className="rounded-sm"
         aria-label="User menu actions"
         onAction={(actionKey) => console.log({ actionKey })}
       >
@@ -36,20 +47,22 @@ export const UserDropdown = () => {
           key="profile"
           className="flex flex-col justify-start w-full items-start"
         >
-          <p>Signed in as</p>
-          <p>zoey@example.com</p>
+          <p>Logueado con:</p>
+          <p>{session?.user.email}</p>
         </DropdownItem>
-        <DropdownItem key="settings">My Settings</DropdownItem>
+        <DropdownSection showDivider title="Dark mode">
+          <DropdownItem key="switch">
+            <DarkModeSwitch />
+          </DropdownItem>
+        </DropdownSection>
+
         <DropdownItem
           key="logout"
           color="danger"
           className="text-danger"
           onClick={handleSignOut}
         >
-          Log Out
-        </DropdownItem>
-        <DropdownItem key="switch">
-          <DarkModeSwitch />
+          Salir
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
