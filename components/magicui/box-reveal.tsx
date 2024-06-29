@@ -69,3 +69,4 @@ export const BoxReveal = ({
 };
 
 export default BoxReveal;
+
