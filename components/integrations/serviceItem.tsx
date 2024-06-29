@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+
 interface ServiceItemProps {
   title: string;
   description: string;
@@ -19,6 +20,9 @@ const ServiceItem = ({
   isActiveService,
 }: ServiceItemProps) => {
   const pathname = usePathname();
+
+  const statusClassNames = isActiveService ? "bg-green-500" : "bg-red-500";
+  const statusText = isActiveService ? "Activo" : "Desactivado";
 
   return (
     <Link href={href}>
@@ -40,17 +44,8 @@ const ServiceItem = ({
           <p className="text-sm text-default-500">{description}</p>
         </div>
         <div className="absolute top-2 right-3 flex gap-2 items-center">
-          {isActiveService ? (
-            <>
-              <div className="h-2 w-2 rounded-full bg-green-500"></div>
-              <h3 className="text-xs">Activo</h3>
-            </>
-          ) : (
-            <>
-              <div className="h-2 w-2 rounded-full bg-red-500"></div>
-              <h3 className="text-xs">Desactivado</h3>
-            </>
-          )}
+          <div className={`h-2 w-2 rounded-full ${statusClassNames}`}></div>
+          <h3 className="text-xs">{statusText}</h3>
         </div>
       </div>
     </Link>

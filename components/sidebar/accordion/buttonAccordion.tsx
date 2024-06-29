@@ -17,15 +17,15 @@ const ButtonAccordion = ({
   isActive,
   icon,
 }: ButtonAccordionProps) => {
+  const iconDropdown = isActive ? (
+    <MdKeyboardArrowUp className="text-white text-lg cursor-pointer" />
+  ) : (
+    <MdKeyboardArrowDown className="text-lg cursor-pointer" />
+  );
+
   return (
     <div className="relative flex flex-col">
-      <div className="absolute top-3 right-4">
-        {isActive ? (
-          <MdKeyboardArrowUp className="text-white text-lg cursor-pointer" />
-        ) : (
-          <MdKeyboardArrowDown className="text-lg cursor-pointer" />
-        )}
-      </div>
+      <div className="absolute top-3 right-4">{iconDropdown}</div>
       <SidebarItem
         title={title}
         isActive={isActive}
