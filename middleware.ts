@@ -1,32 +1,46 @@
 import { getToken } from "next-auth/jwt";
 import { withAuth } from "next-auth/middleware";
-import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-const AuthPages = ["/signin", "/signup"];
-const ProtectedPages = ["/dashboard"];
+export default withAuth(
+  async function middleware(req) {
+    const token = await getToken({ req });
+    const isAuth = !!token;
+    const isAuthPage =
+      req.nextUrl.pathname.startsWith("/signin") ||
+      req.nextUrl.pathname.startsWith("/signup");
 
-export default async function middleware(
-  req: NextRequest,
-  event: NextFetchEvent
-) {
-  const token = await getToken({ req });
-  const isAuthenticated = !!token;
+    if (isAuthPage) {
+      if (isAuth) {
+        return NextResponse.redirect(new URL("/dashboard", req.url));
+      }
 
-  if (AuthPages.includes(req.nextUrl.pathname)) {
-    if (isAuthenticated) {
-      return NextResponse.redirect(new URL("/signin", req.url));
+      return null;
     }
-  }
-  if (ProtectedPages.includes(req.nextUrl.pathname) && !isAuthenticated) {
-    return NextResponse.redirect(new URL("/signin", req.url));
-  }
 
-  const authMiddleware = await withAuth({
-    pages: {
-      signIn: `/signin`,
+    if (!isAuth) {
+      let from = req.nextUrl.pathname;
+      if (req.nextUrl.search) {
+        from += req.nextUrl.search;
+      }
+
+      return NextResponse.redirect(
+        new URL(`/signin?from=${encodeURIComponent(from)}`, req.url)
+      );
+    }
+  },
+  {
+    callbacks: {
+      async authorized() {
+        // This is a work-around for handling redirect on auth pages.
+        // We return true here so that the middleware function above
+        // is always called.
+        return true;
+      },
     },
-  });
+  }
+);
 
-  // @ts-expect-error
-  return authMiddleware(req, event);
-}
+export const config = {
+  matcher: ["/dashboard/:path*", "/editor/:path*", "/signin", "/signup"],
+};
