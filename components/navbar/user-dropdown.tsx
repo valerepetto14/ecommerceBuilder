@@ -10,10 +10,11 @@ import {
 import React from "react";
 import { DarkModeSwitch } from "./darkmodeswitch";
 import { signOut } from "next-auth/react";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
+import useSession from "../hooks/useSession";
 
 export const UserDropdown = () => {
-  const { data: session } = useSession();
+  const user = useSession();
 
   const handleSignOut = async () => {
     await signOut();
@@ -24,16 +25,12 @@ export const UserDropdown = () => {
       <NavbarItem>
         <DropdownTrigger>
           <div className="flex items-center gap-2">
-            <p className="text-sm font-semibold">{session?.user.name}</p>
+            <p className="text-sm font-semibold">{user?.name}</p>
             <Avatar
               as="button"
               size="md"
               className="bg-white border-1 border-slate-500"
-              src={
-                session?.user.img !== null
-                  ? session?.user.img
-                  : "./img/notProfileImage.png"
-              }
+              src={user?.img !== null ? user?.img : "./img/notProfileImage.png"}
             />
           </div>
         </DropdownTrigger>
@@ -48,7 +45,7 @@ export const UserDropdown = () => {
           className="flex flex-col justify-start w-full items-start"
         >
           <p>Logueado con:</p>
-          <p>{session?.user.email}</p>
+          <p>{user?.email}</p>
         </DropdownItem>
         <DropdownSection showDivider title="Dark mode">
           <DropdownItem key="switch">

@@ -2,7 +2,6 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/lib/database";
 import bcrypt from "bcryptjs";
-
 declare module "next-auth" {
   interface Session {
     user: {
