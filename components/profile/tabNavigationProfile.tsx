@@ -1,6 +1,7 @@
 "use client";
-import { usePathname } from "next/navigation";
-import TabItem from "./tabNavigationItem";
+import { usePathname, useRouter } from "next/navigation";
+import Tabs from "./tabs";
+import React from "react";
 const tabs = [
   {
     href: "/dashboard/profile/information",
@@ -16,25 +17,20 @@ const tabs = [
   },
 ];
 
+const tabItems = [
+  { label: "Informacion personal", path: "/dashboard/profile/information" },
+  { label: "Seguridad", path: "/dashboard/profile/security" },
+  { label: "Contacto", path: "/dashboard/profile/contact" },
+];
+
 const TabNavigationProfile = () => {
+  const router = useRouter();
+  const handleTabClick = (path: string) => {
+    router.push(path);
+  };
   const pathname = usePathname();
   return (
-    <div className="flex flex-wrap gap-4">
-      <ul
-        className="mb-5 flex list-none flex-row flex-wrap border-b-0 ps-0"
-        role="tablist"
-        data-twe-nav-ref
-      >
-        {tabs.map((tab) => (
-          <TabItem
-            key={tab.title}
-            href={tab.href}
-            title={tab.title}
-            isActive={pathname === tab.href}
-          />
-        ))}
-      </ul>
-    </div>
+    <Tabs items={tabItems} activePath={pathname} onTabClick={handleTabClick} />
   );
 };
 

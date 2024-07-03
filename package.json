@@ -37,7 +37,7 @@
     "clsx": "^2.1.1",
     "eslint": "8.23.1",
     "eslint-config-next": "13.4.16",
-    "framer-motion": "^11.2.10",
+    "framer-motion": "^11.2.12",
     "postcss": "^8.4.28",
     "prisma": "^5.15.0",
     "tailwind-merge": "^2.3.0",
