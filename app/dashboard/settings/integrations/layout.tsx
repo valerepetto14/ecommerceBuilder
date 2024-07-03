@@ -32,7 +32,7 @@ const Navigation = () => (
   </ul>
 );
 
-const IntegrationsPage = ({ children }: Props) => {
+const IntegrationsLayout = ({ children }: Props) => {
   return (
     <div className="mt-10 max-w-[99rem] mx-auto w-full flex flex-col gap-4">
       <Navigation />
@@ -44,7 +44,7 @@ const IntegrationsPage = ({ children }: Props) => {
       </div>
       <div className="w-full">
         <div className="w-full flex mt-10">
-          <div className="flex flex-col gap-4 flex-2 px-5">
+          <div className="flex flex-col gap-4 flex-2">
             <ServiceItem
               isActiveService={true}
               href="/dashboard/settings/integrations/shopify"
@@ -74,4 +74,4 @@ const IntegrationsPage = ({ children }: Props) => {
   );
 };
 
-export default IntegrationsPage;
+export default IntegrationsLayout;

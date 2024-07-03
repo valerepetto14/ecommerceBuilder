@@ -14,7 +14,6 @@ import { AiFillProduct } from "react-icons/ai";
 import { useState } from "react";
 import ButtonAccordeon from "./accordion/buttonAccordion";
 import ItemAccordion from "./accordion/itemAccordion";
-
 export const SidebarWrapper = () => {
   const pathname = usePathname();
   const { collapsed, setCollapsed } = useSidebarContext();
@@ -38,7 +37,6 @@ export const SidebarWrapper = () => {
         })}
       >
         <div className={Sidebar.Header()}>
-          {/* <CompaniesDropdown /> */}
           <img src="/logo.png" alt="logo" className="flex w-[170px]" />
         </div>
         <div className="flex flex-col justify-between h-full">

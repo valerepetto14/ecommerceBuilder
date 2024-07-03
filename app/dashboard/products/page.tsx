@@ -34,7 +34,7 @@ const Navigation = () => (
 
 const productsPage = () => {
   return (
-    <div className="my-10 max-w-[99rem] mx-auto w-full flex flex-col gap-4">
+    <div className="my-10 max-w-[99rem] h-[700px] mx-auto w-full flex flex-col gap-4">
       <Navigation />
       <Table
         radius="sm"

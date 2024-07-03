@@ -87,4 +87,44 @@ export const products = [
     price: "$399",
     status: "active",
   },
+  {
+    id: 8,
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzldvGwg3CsG9KEwuCtnLFWqsZ2pNRu2NUdQ&s",
+    name: "Macbook air",
+    category: "Technology",
+    subCategory: "Laptop",
+    price: "$1999",
+    status: "paused",
+  },
+  {
+    id: 9,
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MT3D3ref_VW_34FR+watch-case-44-aluminum-midnight-nc-se_VW_34FR+watch-face-44-aluminum-midnight-se_VW_34FR?wid=752&hei=720&bgc=fafafa&trim=1&fmt=p-jpg&qlt=80&.v=ajJYOEQxYjNlejNwbWNnSU16d0NYaWhSbVIzRFJTYlp1MEk4OWNDaTcvNTlEbzMrd1Z5SUpEd0hiT0ZLRlZGNGRCU0luK254NGZZeFNSZCtCaXAxdG5LTGp0WU11cGJPRVJHSFVxWTAxK1diaytyMkV2UXJqeE9wOUlGWnU0cExJQ3VXcFZIUHhBMlU5OU5QT1pyZjQ3WlBtR0ZPUkFPYlc1NC9nRzhiVTZUYlg5SUJPR0VaZnV5YVlTck5WQzFJWitOTEs5T0laM0FBYmtOdWx0aUJtTm5YU0ZMdUpkZktWZmlmcG5VMHJzOD0=",
+    name: "Apple Watch se",
+    category: "Technology",
+    subCategory: "Smartwatch",
+    price: "$399",
+    status: "active",
+  },
+  {
+    id: 8,
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzldvGwg3CsG9KEwuCtnLFWqsZ2pNRu2NUdQ&s",
+    name: "Macbook air",
+    category: "Technology",
+    subCategory: "Laptop",
+    price: "$1999",
+    status: "paused",
+  },
+  {
+    id: 9,
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MT3D3ref_VW_34FR+watch-case-44-aluminum-midnight-nc-se_VW_34FR+watch-face-44-aluminum-midnight-se_VW_34FR?wid=752&hei=720&bgc=fafafa&trim=1&fmt=p-jpg&qlt=80&.v=ajJYOEQxYjNlejNwbWNnSU16d0NYaWhSbVIzRFJTYlp1MEk4OWNDaTcvNTlEbzMrd1Z5SUpEd0hiT0ZLRlZGNGRCU0luK254NGZZeFNSZCtCaXAxdG5LTGp0WU11cGJPRVJHSFVxWTAxK1diaytyMkV2UXJqeE9wOUlGWnU0cExJQ3VXcFZIUHhBMlU5OU5QT1pyZjQ3WlBtR0ZPUkFPYlc1NC9nRzhiVTZUYlg5SUJPR0VaZnV5YVlTck5WQzFJWitOTEs5T0laM0FBYmtOdWx0aUJtTm5YU0ZMdUpkZktWZmlmcG5VMHJzOD0=",
+    name: "Apple Watch se",
+    category: "Technology",
+    subCategory: "Smartwatch",
+    price: "$399",
+    status: "active",
+  },
 ];

@@ -1,19 +1,18 @@
 "use client";
 import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignInSchema } from "@/schemas/index";
 import * as z from "zod";
 import FormError from "../formMessage/formError";
 import FormSuccess from "../formMessage/formSuccess";
-import { FaGoogle } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Toaster, toast } from "sonner";
 
 const SignInForm = () => {
   const [error, setError] = useState<string | null>(null);
@@ -44,13 +43,15 @@ const SignInForm = () => {
         console.log("res", res);
         if (res?.error) {
           if (res.status === 401) {
-            setError("Credentials are invalid");
+            setError("Credenciales inválidas");
+            toast.error("Credenciales inválidas");
           }
           if (res.status === 500) {
             setError("Server error");
           }
         } else {
-          setSuccess("Signed in");
+          setSuccess("Inicio de sesión exitoso");
+          toast.success("Inicio de sesión exitoso");
           router.push("/dashboard");
         }
       })
@@ -128,8 +129,9 @@ const SignInForm = () => {
         </Button>
       </form>
       <div className="mt-10">
-        <FormError message={error} />
-        <FormSuccess message={success} />
+        {/* <FormError message={error} />
+        <FormSuccess message={success} /> */}
+        <Toaster richColors />
       </div>
     </div>
   );
